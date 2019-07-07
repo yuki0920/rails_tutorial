@@ -53,6 +53,10 @@ class User < ApplicationRecord
     UserMailer.account_activation(self).deliver_now
   end
 
+  def password_reset_expired?
+    reset_sent_at < 2.hours.ago
+  end
+
   private
 
   def downcase_email
@@ -63,4 +67,5 @@ class User < ApplicationRecord
     self.activation_token = User.new_token
     self.activation_digest = User.digest(activation_token)
   end
+
 end
