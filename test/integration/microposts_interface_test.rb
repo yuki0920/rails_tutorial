@@ -20,7 +20,7 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
       post microposts_path, params: { micropost:
         { content: content, picture: picture } }
     end
-    assert_redirected_to root_url
+    assert assigns(:micropost).picture?
     follow_redirect!
     assert_match content, response.body
     assert_select 'a', text: 'delete'
